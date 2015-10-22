@@ -222,6 +222,7 @@ namespace ASPChatProject.Controllers
             WebChat WC = new WebChat() { CurrentUser = user };
             if (user != null)
             {
+                MongoDBConnector.SetUserLastActionTime(user.UserName, DateTime.UtcNow);
                 if (!user.IsAdmin)
                     WC.AllChats = WC.AllChats.Where(c => c.AllowedUser.Contains(user.UserName)).ToList();
                 return View(WC);
