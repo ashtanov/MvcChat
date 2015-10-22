@@ -175,6 +175,7 @@ namespace ASPChatProject.Controllers
             var user = CurrentUser;
             if (user != null)
             {
+                MongoDBConnector.SetUserLastActionTime(user.UserName, DateTime.UtcNow);
                 var res = MongoDBConnector.GetMessagesFromChat(chatName).OrderByDescending(x => x.Time).Take(100).OrderBy(y => y.Time);
                 return PartialView(new Tuple<IEnumerable<MessageModel>, bool>(res, user.IsAdmin));
             }
@@ -251,7 +252,9 @@ namespace ASPChatProject.Controllers
             }
             else
             {
-                if(user != null)
+                if (user != null)
+                {
+                    MongoDBConnector.SetUserLastActionTime(user.UserName, DateTime.UtcNow);
                     if (chat.First().AllowedUser.Contains(user.UserName) || user.IsAdmin)
                     {
                         MongoDBConnector.SetUserLastActionTime(user.UserName, DateTime.UtcNow);
@@ -266,6 +269,7 @@ namespace ASPChatProject.Controllers
                         MongoDBConnector.Messages.InsertOneAsync(sysMessage);
                         return View(new Tuple<ChatUserModel, Chat>(user, chat.First()));
                     }
+                }
                 return RedirectToAction("ErrorPage", "Home", ErrorModel.AccessDenied );
             }
         }
