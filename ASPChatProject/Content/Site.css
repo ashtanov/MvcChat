@@ -1,0 +1,98 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+#Messages {
+        position: absolute;
+        width: 72%;
+        left: 20%;
+        height: 60%;
+        top: 18%;
+        background-color: #b3ee9f;
+        text-align: left;
+        font-size: medium;
+        overflow-y: scroll;
+    }
+#Users {
+    position: absolute;
+    width: 10%;
+    left: 10%;
+    height: 67%;
+    top: 18%;
+    background-color: #c0dc85;
+    text-align: left;
+}
+#inputForm {
+        position: absolute;
+        width: 72%;
+        left: 20%;
+        height: 7%;
+        top: 78%;
+        min-height: 60px;
+        background-color: #c0dc85;        
+        border: 1px solid silver;
+        border-radius: 4px;
+        vertical-align: middle;
+    }
+    #container {
+      width:960px;
+      margin:0 auto;
+      background: url("faux-columns.png") repeat-y;
+      overflow: hidden;
+    }
+    #sidebar {
+      float:left;
+      width:340px;
+    }
+    #content {
+      float:left;
+      width:620px;
+    }
+    .Admin{
+        color: red;
+    }
+    .User {
+        color:green;
+    }
+    .System {
+        color: gray;
+    }
+    .dateTd {
+        width: 25ex;
+    }
+    .senderTd {
+        width: 10ex;
+    }
+    #ChatMessages{
+        height: 20ex;
+    }
+    #newChatMessage{
+        position: sticky;
+        width: 100%;
+    }
+    .newChatCount{
+        width: 5ex;
+    }
+    .newChatName{
+        width: 20ex;
+    }

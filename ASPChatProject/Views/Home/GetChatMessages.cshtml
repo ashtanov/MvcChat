@@ -1,0 +1,23 @@
+﻿@model Tuple<IEnumerable<ASPChatProject.Models.MessageModel>,bool>
+
+<table class="table">
+@foreach (var item in Model.Item1) {
+    <tr>
+        <td class="senderTd">
+            @Html.DisplayFor(modelItem => item.Sender)
+        </td>
+        <td class="msgTd @(item.IsSystem ? "System" : "")">
+            @Html.DisplayFor(modelItem => item.MessageText)
+        </td>
+        <td class="dateTd">
+            @item.Time.ToLocalTime()
+        </td>
+        @if (Model.Item2) 
+        { 
+            <td>
+                @Ajax.ActionLink("Del", "DeleteMessage", new { id = item._id }, new AjaxOptions { OnSuccess = "OnSuccessChat", HttpMethod = "POST" }, new { @class = "btn btn-primary" })
+            </td>
+        }
+    </tr>
+}
+</table>

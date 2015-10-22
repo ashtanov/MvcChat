@@ -1,0 +1,43 @@
+﻿@model ASPChatProject.Models.WebChat
+
+@{
+    ViewBag.Title = "StartRoom";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Choose chat, @Model.CurrentUser.UserName !</h2>
+
+@if (Model.CurrentUser.IsAdmin)
+{
+    @Html.ActionLink("AdminRoom", "AdminRoom", "Home", null, new { @class = "btn btn-primary" })
+}
+<div id="container">
+    <div id="sidebar">
+        <h2>Chats</h2>
+        <ul>
+            @foreach (var t in @Model.AllChats)
+            {
+                <li>@Html.ActionLink(t.name, "Chat", "Home", new { name = t.name } , new { @class = "btn btn-primary" })</li>
+            }
+        </ul>
+    </div>
+    <div id="content">
+        <h2>Online</h2>
+        <ul>
+            @foreach (var t in @Model.UsersOnline)
+            {
+                if (t.IsAdmin)
+                {
+                    <li style="color:red">@t.UserName</li>
+                }
+                else
+                {
+                    <li style="color:green">@t.UserName</li>
+                }
+
+            }
+        </ul>
+    </div>
+</div>
+
+

@@ -1,0 +1,53 @@
+﻿@model ASPChatProject.Models.WebChat
+    @{
+        ViewBag.Title = "User";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2><span class=@(Model.CurrentUser.IsAdmin ? "Admin": "User")>@Model.CurrentUser.UserName</span> Menu</h2>
+    <div id="SetAdminRightStatus"></div>
+    @if (!Model.CurrentUser.IsAdmin)
+    {
+        using (Ajax.BeginForm("SetAdminRight", null, new AjaxOptions { UpdateTargetId = "SetAdminRightStatus" }, new { }))
+        {
+            <input type="hidden" name="UserName" value="@Model.CurrentUser.UserName">
+            <input type='submit' id="submit" class="btn btn-primary" value="Сделать админом" />
+        }
+    }
+    <h2>Chats:</h2>
+<div id="SetAccessStatus">
+</div>
+<table>
+    @foreach (var chat in Model.AllChats)
+    {
+
+        <tr>
+            @if (!chat.AllowedUser.Contains(Model.CurrentUser.UserName) || Model.CurrentUser.IsAdmin)
+            {
+
+                <td>
+                    <h4>@string.Format("{0}\tучастники:{1}/{2}", chat.name, chat.AllowedUser.Count, chat.MaxCount)</h4>
+                </td>
+                <td width="30ex"></td>
+                <td>
+                    @using (Ajax.BeginForm("SetAccessToRoom", null, new AjaxOptions { UpdateTargetId = "SetAccessStatus" }, new { }))
+                    {
+                        <input type="hidden" name="ChatName" value="@chat.name">
+                        <input type="hidden" name="UserName" value="@Model.CurrentUser.UserName">
+                        <input type='submit' id="submit" class="btn btn-primary" value="Предоставить доступ" />
+                    }
+                </td>
+
+            }
+        </tr>
+
+    }
+</table>
+
+
+
+
+
+
+
+

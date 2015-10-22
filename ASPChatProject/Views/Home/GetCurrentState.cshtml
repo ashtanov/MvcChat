@@ -1,0 +1,28 @@
+﻿@model ASPChatProject.Models.WebChat
+
+<div id="container">
+    <div id="sidebar">
+        <h2>Chats</h2>
+        <ul>
+            @foreach (var t in @Model.AllChats)
+            {
+                <li>@Html.ActionLink(string.Format("{0} участники:{1}/{2}",t.name,t.AllowedUser.Count,t.MaxCount), "Chat", "Home", new { name = t.name }, new { @class = "btn btn-primary" })</li>
+            }
+
+        </ul>
+    </div>
+    <div id="content">
+        <h2>AllUsers</h2>
+        <ul>
+            @foreach (var t in @Model.AllUsers)
+            {
+                <li>
+                    @Html.ActionLink(@t.UserName, "UserProperties", "Home", new { name = t.UserName }, new { @class = "btn-secondary btn " + (t.IsAdmin ? "Admin" : "User") })
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+
+

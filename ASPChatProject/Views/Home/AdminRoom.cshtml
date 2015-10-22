@@ -1,0 +1,30 @@
+﻿@model ASPChatProject.Models.ChatUserModel
+
+@{
+    ViewBag.Title = "AdminRoom";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AdminRoom</h2>
+@Ajax.ActionLink("Обновить", "GetCurrentState", null, new AjaxOptions { UpdateTargetId = "CurrentState",  HttpMethod = "POST" }, new { @id = "lcs", @class = "btn btn-primary"  })
+<div id="CurrentState"></div>
+<table>
+    <tr>
+        <td><h4>Добавить чат</h4></td>
+    </tr>
+    <tr>
+        <td class="newChatName">Название</td>
+        <td class="newChatCount">Макс.</td>
+    </tr>
+</table>
+@using (Ajax.BeginForm("AddNewChat", new AjaxOptions { OnSuccess = "OnSuccessAdd", OnFailure = "OnFailureAdd" }))
+{
+    <input type="text" name="name" class="newChatName" />
+    <input type="text" name="maxcount" class="newChatCount"/>
+    <input type='submit' id="submit" class="btn btn-primary" value="Добавить" />
+}
+<div id="addResult" class="text-warning"></div>
+
+@Scripts.Render("~/Scripts/AdminRoomScript.js")
+
+

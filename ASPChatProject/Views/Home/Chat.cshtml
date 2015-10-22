@@ -1,0 +1,47 @@
+﻿@model Tuple<ASPChatProject.Models.ChatUserModel, ASPChatProject.Models.Chat>
+
+@{
+    ViewBag.Title = @Model.Item2.name  + " - Chat";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Item2.name (Max: @Model.Item2.MaxCount)</h2>
+<table>
+    <tr>
+        <td>
+            @Ajax.ActionLink("Обновить", "GetChatMessages", new { chatName = Model.Item2.name }, new AjaxOptions { UpdateTargetId = "Messages" , HttpMethod = "POST"}, new { @id = "chatButton", @class = "btn btn-primary" })
+        </td>
+        <td>
+            <div id="updateTime"></div>
+        </td>
+    </tr>
+</table>
+<div id="Users">
+    <h4>Доступ открыт:</h4>
+    <table>
+        @foreach (var u in Model.Item2.AllowedUser) { 
+        <tr>
+            
+                @if (Model.Item1.IsAdmin)
+                {
+                    <td>
+                        @Ajax.ActionLink("X", "DeleteUserFromChat", new { UserName = @u, Chat = @Model.Item2.name }, new AjaxOptions { OnSuccess = "OnSuccessChat", HttpMethod = "POST" }, new { @class = "btn btn-primary" })
+                    </td>
+                }
+            <td>
+                @u
+            </td>
+        </tr>
+        }
+    </table>
+</div>
+
+<div id="Messages"></div>
+@using (Ajax.BeginForm("AddNewMessage", null, new AjaxOptions { OnSuccess = "OnSuccessChat" }, new { @id = "inputForm" }))
+{
+    <input type="hidden" name="FromChat" value="@Model.Item2.name">
+    <input type="text" name="MessageText" id="newChatMessage" />
+    <input type='submit' id="submit" class="btn btn-primary" value="Отправить" />
+}
+@Scripts.Render("~/Scripts/ChatScript.js")
+
